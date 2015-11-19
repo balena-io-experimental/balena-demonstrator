@@ -1,0 +1,265 @@
+/*NEW STYLES*/
+@font-face {
+   font-family: GothamRoundedBold;
+   src: url('GothamRnd-Bold.otf');
+}
+
+@font-face {
+   font-family: GothamRoundedLight;
+   src: url('GothamRnd-light.otf');
+}
+
+@font-face {
+   font-family: GothamRounded;
+   src: url('GothamRnd-Book.otf');
+}
+
+.emphasis {
+  font-family: GothamRoundedBold;
+}
+
+html, body {
+  font-family: GothamRounded;
+  background: #232529;
+  color: #ffffff;
+}
+.meta {
+  color: #C9C9C9;
+}
+
+.info {
+    padding: 10px 0;
+    margin-bottom: 0px;
+}
+
+.typed-cursor{
+    opacity: 1;
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+}
+
+@-webkit-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+
+.devices-wrapper, .tty-wrapper, .applause-wrapper, .welcome-wrapper, .animation-wrapper {
+	display: none;
+  height: 100vh;
+  width: 100%;
+}
+
+.loading-wrapper {
+  height: 100vh;
+  width: 100%;
+}
+
+#tty {
+  overflow: hidden;
+  background: #232529 !important;
+  font-size: 14px;
+}
+
+.animation {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.loading {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.device {
+  margin-bottom: 10px;
+    color: #393E41;
+}
+
+.device-name {
+  color: #ffffff;
+  font-family: GothamRoundedBold;
+}
+
+.right {
+  float: right;
+  color: #ffffff;
+}
+
+.Idle {
+    background-color: #767676;
+}
+
+.progress {
+    height: 20px;
+    border-radius: none;
+}
+
+.Starting {
+  background-color: #4051FF;
+}
+
+.Installing {
+  background-color: #FFDC40;
+}
+
+.Stopping {
+  background-color: #EB5D3F;
+}
+
+.Downloading {
+    background: #40AEC4;
+
+}
+
+.tick {
+  width: 20px;
+  margin-right: 20px;
+  position: absolute;
+  right:0;
+}
+
+@-webkit-keyframes anime_colour_background {
+    0% {background-color: #4051FF;}
+    25% {background-color: #FFDC40;}
+    50% {background-color: #EB5D3F;}
+    75% {background-color: #40AEC4;}
+    100% {background-color: #50CE46;}
+}
+
+@-webkit-keyframes anime_colour {
+  0% {color: #4051FF;}
+  25% {color: #FFDC40;}
+  50% {color: #EB5D3F;}
+  75% {color: #40AEC4;}
+  100% {color: #50CE46;}
+}
+
+.applause-wrapper {
+  margin-top: 5%;
+}
+
+
+.chart{
+  display:table;
+  table-layout: fixed;
+  position: relative;
+  width:100%;
+  height:80vh;
+  margin:0 auto;
+  padding: 0;
+}
+
+.chart li{
+    position:relative;
+    display:table-cell;
+    vertical-align:bottom;
+    height:25%;
+    transition:all 0.25s;
+    -webkit-transition:all .25s;
+    -moz-transition: all 0.25s;
+}
+
+.chart span{
+    margin:0 1em;
+    display: block;
+    height: 10px;
+    transition:height 1s;
+}
+
+.chart span:before{
+  position:absolute;
+  left:0;right:0;top:100%;
+  padding:5px 1em 0;
+  display:block;
+  text-align:center;
+  content:attr(title);
+  word-wrap: break-word;
+}
+
+.fin, .noise {
+  animation: anime_colour_background 0.7s infinite;
+}
+
+.fin {
+  border-top-left-radius:2em;
+  border-top-right-radius:2em;
+}
+
+.noise {
+  animation: anime_colour 0.7s infinite;
+}
+
+.current-level {
+  background: #4051FF;
+  border-top-left-radius:2em;
+  border-top-right-radius:2em;
+}
+
+.current-progress {
+  background: #50CE46;
+  border-bottom-left-radius:2em;
+  border-bottom-right-radius:2em;
+}
+
+h3 {
+  font-weight: 400;
+  border-bottom: 1px solid #767676;
+  padding:10px 0 20px 0;
+}
+
+.logo {
+  width: 20%;
+  display: block;
+  margin: auto;
+}
+
+img {
+  width: 100%
+}
+
+.terminal-window {
+  height: 80%;
+}
+
+.terminal-window header {
+  background: #E0E8F0;
+  height: 30px;
+  border-radius: 8px 8px 0 0;
+  padding-left: 10px;
+}
+
+.terminal-window header .button {
+  width: 12px;
+  height: 12px;
+  margin: 10px 4px 0 0;
+  display: inline-block;
+  border-radius: 8px;
+}
+
+.terminal-window header .button.green {
+  background: #3BB662;
+}
+
+.terminal-window header .button.yellow {
+  background: #E5C30F;
+}
+
+.terminal-window header .button.red {
+  background: #E75448;
+}
+
+.docker-logo {
+  width: 25%;
+}
+
+.term-title {
+  height: 10%;
+  padding-bottom: 0px;
+  border-bottom: none;
+}

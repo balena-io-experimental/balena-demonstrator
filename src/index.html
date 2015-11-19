@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+    <!-- splash -->
+    <script src="static/js/jquery-1.11.3.min.js"></script>
+    <script src="static/js/typed.min.js"></script>
+    <!-- splash -->
+    <script src="static/js/angular.js"></script>
+    <script src="static/js/pubnub.js"></script>
+    <script src="app.js"></script>
+    <script src="services.js"></script>
+  </head>
+  <body>
+      <div class="container-fluid">
+          <div class="loading-wrapper"><!-- git push typer -->
+            <div class="logo loading">
+              <img src="static/images/resin-logo.png">
+            </div>
+          </div><!-- git push typer -->
+          <div ng-controller="animationCtrl" class="animation-wrapper"><!-- git push typer -->
+            <div class="animation">
+              <div class="logo">
+                <img src="static/images/resin-logo.png">
+              </div>
+              <h1>$ <span class="element"></span></h1>
+            </div>
+          </div><!-- git push typer -->
+          <div class="tty-wrapper">
+            <h3 class="term-title"><span class="emphasis">Building</span> and cross compiling <span class="emphasis">Docker container</span></h3>
+      		  <div ng-controller="terminalCtrl">
+              <div class="terminal-window">
+                <header>
+                  <div class="button green"></div>
+                  <div class="button yellow"></div>
+                  <div class="button red"></div>
+                </header>
+                <div id="tty"></div>
+              </div>
+            </div> <!-- ng-controller="terminalCtrl" -->
+          </div> <!-- col-md-12 -->
+          <div class="devices-wrapper" ng-controller="devicesCtrl">
+             <h3><span class="emphasis">Downloading</span> containers to <span class="emphasis">Raspberry Pis</span></h3>
+              <div ng-repeat="device in devices.resp" class="device">
+                <h4 ng-show="device.is_online == true" class="info"><span class="device-name">{{device.name}}</span> {{device.status}}... <span ng-show="device.download_progress != null" class="right">{{device.download_progress}}%</span><img ng-show="device.status == 'Idle'" class="right tick" src="static/images/tick.png"/></h4>
+                <div ng-show="device.is_online == true" class="progress {{device.status}}" style="width:{{device.download_progress}}%"></div>
+              </div> <!-- device -->
+          </div> <!-- device-wrapper -->
+          <div class="applause-wrapper" ng-controller="applauseCtrl">
+             <ul class="chart">
+                <li ng-repeat="meter in meters">
+                  <span class="current-level" style="height:{{meter.current_level}}%"></span>
+                  <span class="current-progress {{meter.finnished}}" style="height:{{meter.current_progress}}%;" ></span>
+                </li>
+              </ul>
+            </div> <!-- ng-controller="devicesCtrl" -->
+      </div> <!-- container -->
+  </body>
+</html>
