@@ -8,7 +8,7 @@ Follow this getting started guide to get your device connected to [resin.io](htt
 
 Then clone this repository
 ```
-git clone https://github.com/resin-io-projects/electron-rpi-quick-start && cd electron-rpi-quick-start
+git clone https://github.com/craig-mulligan/DockerCon-Visuals && cd DockerCon-Visuals
 ```
 
 Add your resin.io applications remote endpoint
