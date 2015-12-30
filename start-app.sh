@@ -12,5 +12,5 @@ if [ ! -z "$RESIN" ]; then
   cd /usr/src/app/ && npm start
   sleep 2s
 else
-  env - `cat env.sh` npm start
+  . env.sh && npm start
 fi
