@@ -4,8 +4,8 @@ var childProcess = require('child_process')
 var email = process.env.SDK_EMAIL || "unicorn@resin.io"
 var pw = process.env.SDK_PW || "resin.io"
 
+// authenticate with resin sdk
 var credentials = { email:email, password:pw };
-
 resin.auth.login(credentials, function(error) {
   if (error != null) {
     throw error;
@@ -13,6 +13,7 @@ resin.auth.login(credentials, function(error) {
   console.log("success authenticated with resin API")
 });
 
+// init pubnub
 var pubnub = PUBNUB({
     subscribe_key: process.env.SUB,
     publish_key: process.env.PUB
@@ -21,7 +22,7 @@ var pubnub = PUBNUB({
 // polls resin app for all devices data
 app.factory('devicesService', function($timeout) {
 	var data = {};
-    (function tick() {
+    (function poll() {
         resin.models.device.getAllByApplication(process.env.APP_NAME,function(error, devices) {
 		  if (error != null) {
 		    throw error;
@@ -30,20 +31,21 @@ app.factory('devicesService', function($timeout) {
 		  // console.log(devices)
 		});  //
 
-	$timeout(tick, 500);
+	   $timeout(poll, 500);
   	})();
 
-  	return {
-	   data: data
+  return {
+	  data: data
 	};
 });
 
-// Fail safe to trigger events if needed
+// Fail safe service to trigger events if needed
 app.service('failSafeService', function($rootScope) {
 	pubnub.subscribe({
 	    channel: 'events',
 	    message: function(m){
 	    	console.log(m)
+        // message must = eventname
 	    	$rootScope.$broadcast(m)
 	    },
 	    error: function (error) {
@@ -53,11 +55,11 @@ app.service('failSafeService', function($rootScope) {
 	 });
 });
 
+
+// service to handle arduino input
 var ArduinoFirmata = require('arduino-firmata');
 var arduino = new ArduinoFirmata();
-
 arduino.connect(); // use default arduino
-
 
 app.service('starterService', function($rootScope) {
 	arduino.on('connect', function() {

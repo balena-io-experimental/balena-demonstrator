@@ -45,15 +45,17 @@ html, body {
     100% { opacity:1; }
 }
 
-.devices-wrapper, .tty-wrapper, .applause-wrapper, .welcome-wrapper, .animation-wrapper {
-	display: none;
+.devices-wrapper, .tty-wrapper, .applause-wrapper, .welcome-wrapper, .animation-wrapper, .selector-wrapper {
   height: 100vh;
   width: 100%;
 }
 
-.loading-wrapper {
-  height: 100vh;
-  width: 100%;
+.selector-wrapper {
+  text-align: center;
+}
+
+.selector-wrapper img:hover {
+  border:1px solid #4051FF;
 }
 
 #tty {

@@ -14,20 +14,29 @@
   </head>
   <body>
       <div class="container-fluid">
-          <div class="loading-wrapper"><!-- git push typer -->
-            <div class="logo loading">
-              <img src="static/images/resin-logo.png">
-            </div>
-          </div><!-- git push typer -->
-          <div ng-controller="animationCtrl" class="animation-wrapper"><!-- git push typer -->
+          <div ng-show="activeView == 'animation-wrapper'" ng-controller="animationCtrl" class="animation-wrapper"><!-- git push typer -->
             <div class="animation">
               <div class="logo">
-                <img src="static/images/resin-logo.png">
+                <img ng-show='logo' ng-src="static/images/{{ logo }}">
               </div>
-              <h1>$ <span class="element"></span></h1>
+              <h1><span class="element">{{ animationText }}</span></h1>
+              <button ng-show='!hasStarted' ng-click="start()" class="btn btn-primary btn-danger">start</button>
             </div>
           </div><!-- git push typer -->
-          <div class="tty-wrapper">
+          <div ng-show="activeView == 'selector-wrapper'" ng-controller="selectorCtrl" class="selector-wrapper"><!-- git push typer -->
+            <div class="container">
+              <div class="row">
+                <h3><span class="emphasis">Select</span> a logo to push to the <span class="emphasis">devices screens</span></h3>
+                <div ng-repeat="image in images" ng-click="select(image)" class="col-sm-{{ 12/images.length}}"><img ng-src="images/{{image}}.png"/></div>
+              </div>
+              <div class="row">
+                <h4>Your Selection: {{ selection }}</h4>
+                <button ng-click="changeRepo()" class="btn btn-primary btn-danger">commit and push</button>
+                <p>{{ warning }}</p>
+              </div>
+            </div>
+          </div><!-- git push typer -->
+          <div ng-show="activeView == 'tty-wrapper'" class="tty-wrapper">
             <h3 class="term-title"><span class="emphasis">Building</span> and cross compiling <span class="emphasis">Docker container</span></h3>
       		  <div ng-controller="terminalCtrl">
               <div class="terminal-window">
@@ -40,14 +49,15 @@
               </div>
             </div> <!-- ng-controller="terminalCtrl" -->
           </div> <!-- col-md-12 -->
-          <div class="devices-wrapper" ng-controller="devicesCtrl">
+          <div ng-show="activeView == 'devices-wrapper'" class="devices-wrapper" ng-controller="devicesCtrl">
              <h3><span class="emphasis">Downloading</span> containers to <span class="emphasis">Raspberry Pis</span></h3>
+             <!-- ng-show="device.is_online == true" -->
               <div ng-repeat="device in devices.resp" class="device">
-                <h4 ng-show="device.is_online == true" class="info"><span class="device-name">{{device.name}}</span> {{device.status}}... <span ng-show="device.download_progress != null" class="right">{{device.download_progress}}%</span><img ng-show="device.status == 'Idle'" class="right tick" src="static/images/tick.png"/></h4>
-                <div ng-show="device.is_online == true" class="progress {{device.status}}" style="width:{{device.download_progress}}%"></div>
+                <h4 class="info"><span class="device-name">{{device.name}}</span> {{device.status}}... <span ng-show="device.download_progress != null" class="right">{{device.download_progress}}%</span><img ng-show="device.status == 'Idle'" class="right tick" src="static/images/tick.png"/></h4>
+                <div class="progress {{device.status}}" style="width:{{device.download_progress}}%"></div>
               </div> <!-- device -->
           </div> <!-- device-wrapper -->
-          <div class="applause-wrapper" ng-controller="applauseCtrl">
+          <div ng-show="activeView == 'applause-wrapper'" class="applause-wrapper" ng-controller="applauseCtrl">
              <ul class="chart">
                 <li ng-repeat="meter in meters">
                   <span class="current-level" style="height:{{meter.current_level}}%"></span>

@@ -20,15 +20,22 @@ app.on('window-all-closed', function() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
+  process.env.PUB = 'pub-c-50c523d1-e9c5-4e13-b7f7-1383a3ca4645'
+  process.env.SUB = 'sub-c-3bd403c8-0ec0-11e5-a5c2-0619f8945a4f'
+
+  process.env.REMOTE = 'unicorn@git.resin.io:unicorn/microbeast.git'
+  process.env.SDK_EMAIL = 'unicorn@resin.io'
+  process.env.SDK_PW = 'resin.io'
+  process.env.APP_NAME = 'microBeast'
   // Create the browser window.
-  // mainWindow = new BrowserWindow({width: 800, height: 600});
-  mainWindow = new BrowserWindow({"fullscreen": true, "auto-hide-menu-bar": true});
+  mainWindow = new BrowserWindow({width: 800, height: 600});
+  // mainWindow = new BrowserWindow({"fullscreen": true, "auto-hide-menu-bar": true});
   // and load the index.html of the app.
 
   mainWindow.loadUrl('file://' + __dirname + '/src/index.html');
 
   // Open the DevTools.
-  // mainWindow.openDevTools();
+  mainWindow.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
