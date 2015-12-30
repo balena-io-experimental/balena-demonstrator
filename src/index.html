@@ -19,7 +19,7 @@
               <div class="logo">
                 <img ng-show='logo' ng-src="static/images/{{ logo }}">
               </div>
-              <h1><span class="element">{{ animationText }}</span></h1>
+              <h1><span class="element"></span></h1>
               <button ng-show='!hasStarted' ng-click="start()" class="btn btn-primary btn-danger">start</button>
             </div>
           </div><!-- git push typer -->
@@ -57,14 +57,6 @@
                 <div class="progress {{device.status}}" style="width:{{device.download_progress}}%"></div>
               </div> <!-- device -->
           </div> <!-- device-wrapper -->
-          <div ng-show="activeView == 'applause-wrapper'" class="applause-wrapper" ng-controller="applauseCtrl">
-             <ul class="chart">
-                <li ng-repeat="meter in meters">
-                  <span class="current-level" style="height:{{meter.current_level}}%"></span>
-                  <span class="current-progress {{meter.finnished}}" style="height:{{meter.current_progress}}%;" ></span>
-                </li>
-              </ul>
-            </div> <!-- ng-controller="devicesCtrl" -->
       </div> <!-- container -->
   </body>
 </html>

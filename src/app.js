@@ -42,32 +42,30 @@ function animationCtrl($scope, $rootScope, failSafeService, starterService) {
 
   $scope.$on('pre_start', function(event) {
     console.log('load');
-    $scope.animationText = '';
     $rootScope.activeView = "animation-wrapper";
     $scope.logo = 'resin-logo.png';
     $scope.hasStarted = false;
   });
 
-  $scope.$on('start', function(event) {
+  $scope.$on('commit', function(event) {
     $rootScope.activeView = "animation-wrapper";
-    $scope.animationText = '';
-    console.log("starting");
+    console.log("commiting");
     $(".element").typed({
-      strings: ["$ git push resin master"],
+      strings: ["$ git commit -a -m 'new image'", "$ git push resin master"],
       typeSpeed: 25,
-      onStringTyped: function() {
+      callback: function() {
         setTimeout(function() {
+          $('.animation h1').html('<span class="element"></span>');
           $rootScope.$broadcast('start_build');
-        }, 1000);
+        }, 2000);
       },
     });
    });
 
   $scope.$on('start_countdown', function(event) {
     $rootScope.activeView = "animation-wrapper";
-    $scope.animationText = ''
     $(".element").typed({
-      strings: ["YOU JUST UPDATED", 'A FLEET DEVICES', 'IN SEATTLE',
+      strings: ["YOU JUST UPDATED", 'A FLEET OF DEVICES', 'IN SEATTLE',
         " <b class='noise'>NICE !!!</b>"
       ],
       typeSpeed: 50,
@@ -75,30 +73,9 @@ function animationCtrl($scope, $rootScope, failSafeService, starterService) {
       callback: function() {
         setTimeout(function() {
           // $rootScope.$broadcast('start_tts');
+          $('.animation h1').html('<span class="element"></span>');
           $rootScope.$broadcast('pre_start');
         }, 5000);
-      },
-    });
-  });
-
-  $scope.$on('start_tts', function(event) {
-    g = 0
-    $rootScope.activeView = "animation-wrapper";
-    $scope.animationText = '';
-    $scope.logo = 'resin-logo.png';
-    $(".element").typed({
-      strings: ["LEVEL UNLOCKED","WELCOME TO DOCKERCON"],
-      typeSpeed: 25,
-      backDelay: 1000,
-      onStringTyped: function() {
-          setTimeout(function() {
-            if (g == 0) {
-              // text2speech('welcome');
-              console.log('text2speech happens now')
-            }
-            ++g;
-            console.log(g);
-          }, 2000);
       },
     });
   });
@@ -109,6 +86,7 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
   $scope.$on('start_build', function(event) {
     console.log('start_build')
     $rootScope.activeView = "tty-wrapper";
+    // run push script and pass path to simple-beast-demo
     var script = __dirname + '/push.sh'
 
     var command = pty.spawn('bash', [script], {
@@ -156,7 +134,7 @@ function selectorCtrl($scope, $rootScope, failSafeService) {
         } else {
           if (err) return console.error(err)
           console.log("code change success!")
-          $rootScope.$broadcast('start_build');
+          $rootScope.$broadcast('commit');
         }
       }) // copy image file
     }
@@ -204,68 +182,5 @@ function devicesCtrl($scope, $rootScope, devicesService, failSafeService) {
           $rootScope.$broadcast('start_countdown');
       }
     }, true);
-  });
-}
-
-function applauseCtrl($scope, $rootScope, devicesService, failSafeService) {
-  $scope.$on('start_applause', function(event) {
-    $rootScope.activeView = "applause-wrapper";
-    $scope.devices = devicesService.data;
-
-    var devices = $scope.devices.resp
-    var channel_list = []
-    var unsubscribed = []
-    $scope.meters = {};
-
-    pubnub.publish({
-      channel: 'events',
-      message: 'ready',
-      callback: applauseMeter()
-    });
-
-    function applauseMeter() {
-      for (i = 0; i < devices.length; i++) {
-        if (devices[i].is_online) {
-            channel_list.push(devices[i].uuid);
-        }
-        // $scope.meters.
-        if (i == devices.length - 1) {
-          console.log("loop fin")
-            // subscribe to channels
-          $scope.meters = objectify(channel_list);
-          pubnub.subscribe({
-            channel: channel_list,
-            message: function(m, env, ch) {
-              $scope.$apply(function() {
-                $scope.meters[ch].current_level = m.current_level;
-                $scope.meters[ch].current_progress = m.current_progress
-              });
-              // check reaches limit
-              if ($scope.meters[ch].current_progress == 100) {
-                console.log("unsubscribing: " + ch)
-                pubnub.unsubscribe({
-                  channel: ch,
-                });
-                unsubscribed.push(ch);
-                $scope.$apply(function() {
-                  $scope.meters[ch].finnished = "fin"
-                  $scope.meters[ch].current_level = 0
-                });
-                if (unsubscribed.length == channel_list.length) {
-                  setTimeout(function() {
-                    $rootScope.$broadcast('start_tts');
-                  }, 2000)
-                }
-              }
-
-            },
-            error: function(error) {
-              // Handle error here
-              console.log(JSON.stringify(error));
-            }
-          });
-        }
-      }
-    }
   });
 }
