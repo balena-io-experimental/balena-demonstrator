@@ -6,7 +6,7 @@ var pty = require('pty.js');
 var Terminal = require('term.js').Terminal;
 var fs = require('fs-extra');
 
-rows = parseInt(process.env.ROWS) || 20
+rows = parseInt(process.env.ROWS) || 23
 cols = parseInt(process.env.COLS) || 80
 
 function objectify(array) {

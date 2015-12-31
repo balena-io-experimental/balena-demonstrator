@@ -19,5 +19,5 @@ APP_NAME=myApp
 ```
 Then run (for setup and anytime you want to run the app):
 ```
-./init.sh
+bash init.sh
 ```
