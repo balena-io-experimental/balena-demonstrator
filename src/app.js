@@ -110,9 +110,7 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
     command.pipe(term);
 
     command.on('exit', function () {
-      setTimeout(function() {
         $rootScope.$broadcast('start_download');
-      }, 2000);
     });
   });
 }
@@ -127,7 +125,7 @@ function selectorCtrl($scope, $rootScope, failSafeService) {
     };
 
     $scope.changeRepo = function(){
-      fs.copy(__dirname + '/images/'+ $scope.selection + '.raw', '../simple-beast-demo/images/image.raw', function (err) {
+      fs.copy(__dirname + '/images/'+ $scope.selection + '.raw', '../simple-beast-fork/images/image.raw', function (err) {
         if ($scope.selection == null) {
           $scope.warning = "you first need to select an image"
           return;
