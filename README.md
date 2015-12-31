@@ -1,27 +1,23 @@
-# electron-rpi-quick-start
-
-This fork of the [electron-quick-start](https://github.com/atom/electron-quick-start) app was made to jumpstart any electron app development on the rasperrypi (or any [resin.io supported device that has screen output](https://resin.io/#supported-devices)). Resin.io allows you to easily deploy and manage your application across a fleet of devices making it a great fit for distributed electron app. You can read more about how resin.io works [here](https://resin.io/how-it-works/)
+# electron-resin-conference-demo-app
 
 ## To Use
 
 Follow this getting started guide to get your device connected to [resin.io](https://resin.io/)
 
-Then clone this repository
+Running on a non-resin device:
 ```
-git clone https://github.com/craig-mulligan/DockerCon-Visuals && cd DockerCon-Visuals
+git clone https://github.com/craig-mulligan/ces-demo && cd ces-demo
 ```
-
-Add your resin.io applications remote endpoint
+Make sure you have these environment variables in a file named `env.sh`
 ```
-git add remote resin <username>@git.resin.io:<username>/<app-name>.git
+PUB= pubnub publishing channel
+SUB= pubnub subscribe channel
+REMOTE=your slave apps endpoint
+SDK_EMAIL=you resin account email
+SDK_PW=you resin account pw
+APP_NAME=myApp
 ```
-
-Push your application to your device and make sure it has a screen attached.
-
+Then run (for setup and anytime you want to run the app):
 ```
-git push resin master
+./init.sh
 ```
-
-You can learn more about each of these components within the [Quick Start Guide](http://electron.atom.io/docs/latest/tutorial/quick-start).
-
-Learn more about Electron and its API in the [documentation](http://electron.atom.io/docs/latest).

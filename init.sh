@@ -2,6 +2,7 @@
 # export PASSWD=${PASSWD:=root}
 # #Set the root password
 # echo "root:$PASSWD" | chpasswd
+# TODO: clean up paths where slave repo is stored
 
 if [ ! -z "$RESIN" ]; then
 	# check if this is a resin device
@@ -47,9 +48,10 @@ else
 	if [ -d "$DIRECTORY" ]; then
 		echo "starting app"
 	else
+		npm install
 		REMOTE='unicorn@git.resin.io:unicorn/microbeast.git'
 		cd ../ && git clone git@github.com:craig-mulligan/simple-beast-fork.git && cd simple-beast-fork && git remote add resin $REMOTE; cd -; cd ces-demo
 		echo "repo setup"
 	fi
-	bash start-app.sh
+	./start-app.sh
 fi

@@ -9,15 +9,6 @@ var fs = require('fs-extra');
 rows = parseInt(process.env.ROWS) || 20
 cols = parseInt(process.env.COLS) || 80
 
-function text2speech(filename){
-  var fs = require('fs');
-  var cp = require('child_process');
-
-  var aplay = cp.spawn('aplay');
-  console.log("speaking");
-  fs.createReadStream('/usr/src/app/src/'+ filename +'.wav').pipe(aplay.stdin);
-}
-
 function objectify(array) {
   result = {}
   for (var i = 0; i < array.length; i++) {
