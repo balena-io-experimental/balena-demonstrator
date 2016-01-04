@@ -50,7 +50,7 @@
             </div> <!-- ng-controller="terminalCtrl" -->
           </div> <!-- col-md-12 -->
           <div ng-show="activeView == 'devices-wrapper'" class="devices-wrapper" ng-controller="devicesCtrl">
-             <h3><span class="emphasis">Downloading</span> containers to <span class="emphasis">Raspberry Pis</span></h3>
+             <h3><span class="emphasis">Downloading</span> containers to <span class="emphasis">to remote devices</span></h3>
              <!-- ng-show="device.is_online == true" -->
               <div ng-repeat="device in devices.resp" class="device">
                 <h4 class="info"><span class="device-name">{{device.name}}</span> {{device.status}}... <span ng-show="device.download_progress != null" class="right">{{device.download_progress}}%</span><img ng-show="device.status == 'Idle'" class="right tick" src="static/images/tick.png"/></h4>
