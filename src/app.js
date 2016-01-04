@@ -110,7 +110,7 @@ function selectorCtrl($scope, $rootScope, failSafeService) {
   $scope.$on('start_selector', function(event) {
     $rootScope.activeView = "selector-wrapper";
     // declare image options it must have a corresponding raw file in the same dir;
-    $scope.images = ["docker", "heroku", "resin"];
+    $scope.images = ["ces", "ericsson", "resin"];
     $scope.select = function(image) {
       $scope.selection = image;
     };
