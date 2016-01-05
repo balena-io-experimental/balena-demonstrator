@@ -45,7 +45,10 @@
                   <div class="button yellow"></div>
                   <div class="button red"></div>
                 </header>
-                <div id="tty"></div>
+                <div id="tty">
+                  <p ng-repeat="line in stderr">{{line}}</p>
+                </div>
+                {{ }}
               </div>
             </div> <!-- ng-controller="terminalCtrl" -->
           </div> <!-- col-md-12 -->

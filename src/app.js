@@ -3,10 +3,10 @@ var app = angular.module('myApp', []).run(function ($rootScope) {
     $rootScope.activeView = "animation-wrapper";
 });
 var resin = require("resin-sdk");
-var pty = require('pty.js');
-var Terminal = require('term.js').Terminal;
 var fs = require('fs-extra');
 var isWindows = require('is-windows');
+var exec = require('child_process').exec;
+var child;
 
 var w = window.innerWidth;
 var h = window.innerHeight;
@@ -76,48 +76,42 @@ function animationCtrl($scope, $rootScope, failSafeService) {
 
 
 function terminalCtrl($scope, $rootScope, failSafeService) {
+  var $cont = $('#tty');
+  $cont[0].scrollTop = $cont[0].scrollHeight;
   $scope.$on('start_build', function(event) {
 
-    rows = parseInt(config.ROWS) || Math.ceil(h/24) //makes the term.js responsive-ish
-    cols = parseInt(config.COLS) || Math.ceil(w/2) //makes the term.js responsive-ish
-
-    console.log(rows + " " + cols)
     $rootScope.activeView = "tty-wrapper";
     // run push script and pass path to simple-beast-demo
 
     if (isWindows()) {
-      var cmd = __dirname + '/push.cmd'
+      var script = __dirname + '/push.cmd'
+      var cmd = 'cmd.exe';
     } else {
       var script = __dirname + '/push.sh'
-      var cmd = "bash"
+      var cmd = 'bash'
     }
 
-    console.log(cmd)
-    var command = pty.spawn(cmd, [script],{
-      name: 'xterm-color',
-      cols: cols,
-      rows: rows,
+    $scope.stderr = []
+
+    var util  = require('util'),
+        spawn = require('child_process').spawn,
+        command    = spawn('bash', [script]);
+
+    command.stderr.on('data', function (data) {
+      console.log('stderr: ' + data);
+      $scope.stderr.push(data.toString('utf8'));
+      $cont[0].scrollTop = $cont[0].scrollHeight;
     });
 
-    var term = new Terminal({
-      cols: cols,
-      rows: rows,
-      screenKeys: true,
-      // useStyle: true,
-    });
-
-    command.on('data', function(data) {
-      console.log(data);
-    });
-
-    term.open(document.getElementById('tty'));
-    command.pipe(term);
-
-    command.on('exit', function () {
+    command.on('exit', function (code) {
+      console.log("exit");
+      setTimeout(function () {
         $rootScope.$broadcast('start_download');
+      }, 10);
     });
   });
 }
+
 
 function selectorCtrl($scope, $rootScope, failSafeService) {
   $scope.$on('start_selector', function(event) {

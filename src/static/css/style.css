@@ -62,6 +62,7 @@ html, body {
   overflow: hidden;
   background: #232529 !important;
   font-size: 14px;
+  max-height: 300px;
 }
 
 .animation {
