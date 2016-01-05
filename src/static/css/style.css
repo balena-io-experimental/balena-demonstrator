@@ -64,6 +64,7 @@ html, body {
   font-size: 14px;
   height: 80vh;
   padding: 5px;
+  font-family: 'Roboto Mono';
 }
 
 .animation {
