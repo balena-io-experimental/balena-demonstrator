@@ -8,9 +8,6 @@ var isWindows = require('is-windows');
 var exec = require('child_process').exec;
 var child;
 
-var w = window.innerWidth;
-var h = window.innerHeight;
-
 function objectify(array) {
   result = {}
   for (var i = 0; i < array.length; i++) {
@@ -126,7 +123,7 @@ function selectorCtrl($scope, $rootScope, failSafeService) {
     };
 
     $scope.changeRepo = function(){
-      fs.copy(__dirname + '/images/'+ $scope.selection + '.raw', '../simple-beast-fork/images/test.raw', function (err) {
+      fs.copy(__dirname + '/images/'+ $scope.selection + '.raw', '../simple-beast-fork/images/image.raw', function (err) {
         if ($scope.selection == null) {
           $scope.warning = "you first need to select an image"
           return;

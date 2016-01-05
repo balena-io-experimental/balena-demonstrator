@@ -7,7 +7,6 @@ var child;
 
 var parentDir =__dirname;
 
-
 try {
   fs.accessSync(parentDir + "/.." + "/simple-beast-fork", fs.F_OK);
     // check if slave repo exists
