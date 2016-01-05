@@ -28,8 +28,6 @@
   "dependencies": {
     "fs-extra": "^0.26.3",
     "is-windows": "^0.1.1",
-    "pty.js": "^0.3.0",
-    "resin-sdk": "*",
-    "term.js": "0.0.7"
+    "resin-sdk": "*"
   }
 }
