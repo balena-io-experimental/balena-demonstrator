@@ -2,13 +2,39 @@
 
 ## To Use
 
+#### Initial set-up
 Follow this getting started guide to get your device connected to [resin.io](https://resin.io/)
 
-Running on a non-resin device:
+1. make sure you have node and git install
+2. make sure you have [ssh client set-up](https://help.github.com/articles/generating-ssh-keys/).
+3. add you id_rsa.pub key to unicorn@resin.io account
+4. set up a git user by Running
 ```
-git clone https://github.com/craig-mulligan/ces-demo && cd ces-demo
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
 ```
-Make sure you have these environment variables in a file named `env.json`
+
+```
+git clone https://github.com/craig-mulligan/ces-demo
+```
+```
+git clone https://github.com/craig-mulligan/simple-beast-fork
+```
+
+```
+cd ces-demo
+```
+
+**Windows users**
+```
+git checkout no-tty
+```
+
+```
+npm install
+```
+
+Make sure you have these environment variables in a file named `env.json` in `/ces-demo`
 ```
 {
   "PUB": "pubnub pubkey",
@@ -19,7 +45,8 @@ Make sure you have these environment variables in a file named `env.json`
   "APP_NAME": "resin app name"
 }
 ```
-Then run (for setup and anytime you want to run the app):
+
+#### To run
 ```
-bash init.sh
+npm start
 ```
