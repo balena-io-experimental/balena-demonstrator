@@ -40,18 +40,6 @@ function cloneSlave() {
     if (error !== null) {
       console.log('exec error: ' + error);
     } else {
-      npmInstall();
-    }
-  });
-}
-
-function npmInstall() {
-  child = exec("npm install", function (error, stdout, stderr) {
-    console.log('stdout: ' + stdout);
-    console.log('stderr: ' + stderr);
-    if (error !== null) {
-      console.log('exec error: ' + error);
-    } else {
       startApp();
     }
   });
