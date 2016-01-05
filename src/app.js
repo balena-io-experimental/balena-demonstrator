@@ -84,8 +84,7 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
     // run push script and pass path to simple-beast-demo
 
     if (isWindows()) {
-      var script = __dirname + '/push.cmd'
-      var cmd = 'cmd.exe';
+      var cmd = __dirname + '/push.cmd';
     } else {
       var script = __dirname + '/push.sh'
       var cmd = 'bash'
@@ -100,6 +99,7 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
     command.stdout.on('data', function (data) {
       console.log('stdout: ' + data);
     });
+
     command.stderr.on('data', function (data) {
       console.log('stderr: ' + data);
       $scope.stderr.push(data.toString('utf8'));
