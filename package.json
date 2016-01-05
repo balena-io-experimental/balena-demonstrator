@@ -28,6 +28,7 @@
   "dependencies": {
     "fs-extra": "^0.26.3",
     "is-windows": "^0.1.1",
-    "resin-sdk": "*"
+    "resin-sdk": "*",
+    "stripcolorcodes": "^0.1.0"
   }
 }

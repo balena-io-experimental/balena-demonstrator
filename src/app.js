@@ -7,6 +7,7 @@ var fs = require('fs-extra');
 var isWindows = require('is-windows');
 var exec = require('child_process').exec;
 var child;
+var stripColorCodes = require('stripcolorcodes');
 
 function objectify(array) {
   result = {}
@@ -105,9 +106,8 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
           $('#tty pre').last().remove();
         }
         if (line.length > 0) {
-          $("#tty").append("<pre>" + line + "</pre>");
+          $("#tty").append("<pre>" + stripColorCodes(line) + "</pre>");
         }
-        // console.log('stderr: ' + JSON.stringify(line));
       });
       $cont[0].scrollTop = $cont[0].scrollHeight;
     });
