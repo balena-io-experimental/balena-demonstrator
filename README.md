@@ -14,6 +14,8 @@ $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
 ```
 
+#### repo set-up
+
 ```
 git clone https://github.com/craig-mulligan/ces-demo
 ```
