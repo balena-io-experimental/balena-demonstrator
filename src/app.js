@@ -97,6 +97,9 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
         spawn = require('child_process').spawn,
         command    = spawn(cmd, [script]);
 
+    command.stdout.on('data', function (data) {
+      console.log('stdout: ' + data);
+    });
     command.stderr.on('data', function (data) {
       console.log('stderr: ' + data);
       $scope.stderr.push(data.toString('utf8'));
