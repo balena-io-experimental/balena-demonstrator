@@ -18,11 +18,11 @@ $ git config --global user.email johndoe@example.com
 git clone https://github.com/craig-mulligan/ces-demo
 ```
 ```
-git clone https://github.com/craig-mulligan/simple-beast-fork
+git clone https://github.com/craig-mulligan/simple-beast-fork && cd simple-beast-fork && git remote add resin unicorn@git.resin.io:unicorn/microbeast.git;
 ```
 
 ```
-cd ces-demo
+cd ../ces-demo
 ```
 
 **Windows users**
