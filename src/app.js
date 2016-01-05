@@ -102,10 +102,11 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
       data.toString("ascii").replace(/\r/g, '\n\r').split('\n').forEach(function(line) {
         var line = line.replace(/\t/g, '    ');
         if(line[0] == '\r') {
-          // $('#tty pre').last().remove();
-          // console.log('Tits');
+          $('#tty pre').last().remove();
         }
-        $("#tty").append("<pre>" + line + "</pre>");
+        if (line.length > 0) {
+          $("#tty").append("<pre>" + line + "</pre>");
+        }
         // console.log('stderr: ' + JSON.stringify(line));
       });
       $cont[0].scrollTop = $cont[0].scrollHeight;
