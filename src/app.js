@@ -99,7 +99,7 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
 
     command.stderr.on('data', function (data) {
       console.log('stderr: ' + data);
-      $scope.stderr.push(data.toString('utf8'));
+      $scope.stderr.push(data.toString("ascii"));
       $cont[0].scrollTop = $cont[0].scrollHeight;
     });
 
