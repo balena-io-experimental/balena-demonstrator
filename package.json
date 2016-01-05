@@ -13,8 +13,7 @@
   "keywords": [
     "Electron",
     "quick",
-    "start",
-    "tutorial"
+    "start"
   ],
   "author": "GitHub",
   "license": "MIT",
@@ -27,8 +26,8 @@
     "electron-rebuild": "^1.0.2"
   },
   "dependencies": {
-    "arduino-firmata": "*",
     "fs-extra": "^0.26.3",
+    "is-windows": "^0.1.1",
     "pty.js": "^0.3.0",
     "resin-sdk": "*",
     "term.js": "0.0.7"

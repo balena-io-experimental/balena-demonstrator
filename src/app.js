@@ -1,3 +1,4 @@
+var config = require('../env.json');
 var app = angular.module('myApp', []).run(function ($rootScope) {
     $rootScope.activeView = "animation-wrapper";
 });
@@ -5,9 +6,10 @@ var resin = require("resin-sdk");
 var pty = require('pty.js');
 var Terminal = require('term.js').Terminal;
 var fs = require('fs-extra');
+var isWindows = require('is-windows');
 
-rows = parseInt(process.env.ROWS) || 23
-cols = parseInt(process.env.COLS) || 80
+var w = window.innerWidth;
+var h = window.innerHeight;
 
 function objectify(array) {
   result = {}
@@ -17,7 +19,7 @@ function objectify(array) {
   return result;
 }
 
-function animationCtrl($scope, $rootScope, failSafeService, starterService) {
+function animationCtrl($scope, $rootScope, failSafeService) {
   //defaults
   $scope.animationText = '';
   $rootScope.activeView = "animation-wrapper";
@@ -75,12 +77,23 @@ function animationCtrl($scope, $rootScope, failSafeService, starterService) {
 
 function terminalCtrl($scope, $rootScope, failSafeService) {
   $scope.$on('start_build', function(event) {
-    console.log('start_build')
+
+    rows = parseInt(config.ROWS) || Math.ceil(h/24) //makes the term.js responsive-ish
+    cols = parseInt(config.COLS) || Math.ceil(w/2) //makes the term.js responsive-ish
+
+    console.log(rows + " " + cols)
     $rootScope.activeView = "tty-wrapper";
     // run push script and pass path to simple-beast-demo
-    var script = __dirname + '/push.sh'
 
-    var command = pty.spawn('bash', [script], {
+    if (isWindows()) {
+      var cmd = __dirname + '/push.cmd'
+    } else {
+      var script = __dirname + '/push.sh'
+      var cmd = "bash"
+    }
+
+    console.log(cmd)
+    var command = pty.spawn(cmd, [script],{
       name: 'xterm-color',
       cols: cols,
       rows: rows,

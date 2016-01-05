@@ -8,14 +8,16 @@ Running on a non-resin device:
 ```
 git clone https://github.com/craig-mulligan/ces-demo && cd ces-demo
 ```
-Make sure you have these environment variables in a file named `env.sh`
+Make sure you have these environment variables in a file named `env.json`
 ```
-PUB= pubnub publishing channel
-SUB= pubnub subscribe channel
-REMOTE=your slave apps endpoint
-SDK_EMAIL=you resin account email
-SDK_PW=you resin account pw
-APP_NAME=myApp
+{
+  "PUB": "pubnub pubkey",
+  "SUB": "pubnub subkey",
+  "REMOTE": "resin app endpoint",
+  "SDK_EMAIL": "resin app email",
+  "SDK_PW": "resin pw",
+  "APP_NAME": "resin app name"
+}
 ```
 Then run (for setup and anytime you want to run the app):
 ```
