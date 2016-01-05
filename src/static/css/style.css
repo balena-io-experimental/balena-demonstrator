@@ -63,6 +63,7 @@ html, body {
   background: #000 !important;
   font-size: 14px;
   height: 80vh;
+  padding: 5px;
 }
 
 .animation {

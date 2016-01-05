@@ -8,14 +8,14 @@ var child;
 var parentDir =__dirname;
 
 try {
-  fs.accessSync(parentDir + "/.." + "/simple-beast-fork", fs.F_OK);
-    // check if slave repo exists
-    console.log('slave-repo exists');
-    startApp();
-  } catch (e) {
-    console.log('no slave-repo, cloning slave-repo');
-    cloneSlave();
-  }
+fs.accessSync(parentDir + "/.." + "/simple-beast-fork", fs.F_OK);
+  // check if slave repo exists
+  console.log('slave-repo exists');
+  startApp();
+} catch (e) {
+  console.log('no slave-repo, cloning slave-repo');
+  cloneSlave();
+}
 
 function startApp() {
   child = exec("npm start", function (error, stdout, stderr) {
