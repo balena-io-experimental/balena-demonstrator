@@ -98,8 +98,16 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
     });
 
     command.stderr.on('data', function (data) {
-      console.log('stderr: ' + data);
-      $scope.stderr.push(data.toString("ascii"));
+
+      data.toString("ascii").replace(/\r/g, '\n\r').split('\n').forEach(function(line) {
+        var line = line.replace(/\t/g, '    ');
+        if(line[0] == '\r') {
+          // $('#tty pre').last().remove();
+          // console.log('Tits');
+        }
+        $("#tty").append("<pre>" + line + "</pre>");
+        // console.log('stderr: ' + JSON.stringify(line));
+      });
       $cont[0].scrollTop = $cont[0].scrollHeight;
     });
 
@@ -180,3 +188,10 @@ function devicesCtrl($scope, $rootScope, devicesService, failSafeService) {
     }, true);
   });
 }
+
+// app.filter('carriage', function(){
+//   return function(input){
+//     console.log($('#tty pre').last().text());
+//     return input;
+//   }
+// });
