@@ -95,7 +95,7 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
 
     var util  = require('util'),
         spawn = require('child_process').spawn,
-        command    = spawn('bash', [script]);
+        command    = spawn(cmd, [script]);
 
     command.stderr.on('data', function (data) {
       console.log('stderr: ' + data);
