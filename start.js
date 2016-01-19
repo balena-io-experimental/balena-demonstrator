@@ -22,9 +22,9 @@ function startApp() {
 
 function check() {
   async.each(config.APPS,
-    // 2nd param is the function that each item is passed to
     function(app, callback){
       try {
+        // check if the app exists
         fs.accessSync(parentDir + "/.." + "/" + app.name, fs.F_OK);
         callback();
       } catch (e) {
