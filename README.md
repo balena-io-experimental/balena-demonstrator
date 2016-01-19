@@ -17,19 +17,7 @@ $ git config --global user.email johndoe@example.com
 #### repo set-up
 
 ```
-git clone https://github.com/craig-mulligan/ces-demo
-```
-```
-git clone https://github.com/craig-mulligan/simple-beast-fork && cd simple-beast-fork && git remote add resin unicorn@git.resin.io:unicorn/microbeast.git;
-```
-
-```
-cd ../ces-demo
-```
-
-```
-**Windows users**
-git checkout no-tty
+git clone https://github.com/craig-mulligan/ces-demo && cd ces-demo
 ```
 
 ```
@@ -39,16 +27,20 @@ npm install
 Make sure you have these environment variables in a file named `env.json` in `/ces-demo`
 ```
 {
-  "PUB": "pubnub pubkey",
-  "SUB": "pubnub subkey",
   "REMOTE": "resin app endpoint",
   "SDK_EMAIL": "resin app email",
   "SDK_PW": "resin pw",
-  "APP_NAME": "resin app name"
+  "APP_NAME": "resin app name",
+  "LOGO": "Branding"
+  "PICTURE_DEMO": Boolean (If you are using picture demo or app selection)
+  "APPS": "array of repositories",
+  "IMAGES": "array of images (must have png and raw file in /images folder)",
+  "HEADING": For configuring certain strings in the app
 }
 ```
 
-#### To run
 ```
-npm start
+**Windows users**
+git checkout no-tty
+more info coming soon
 ```
