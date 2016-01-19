@@ -23,7 +23,7 @@ function animationCtrl($scope, $rootScope, failSafeService) {
   //defaults
   $scope.animationText = '';
   $rootScope.activeView = "animation-wrapper";
-  $scope.logo = 'resin-logo.png';
+  $scope.logo = config.LOGO;
   // shows start button process
   $scope.start = true;
 
@@ -36,20 +36,21 @@ function animationCtrl($scope, $rootScope, failSafeService) {
   $scope.$on('pre_start', function(event) {
     console.log('load');
     $rootScope.activeView = "animation-wrapper";
-    $scope.logo = 'resin-logo.png';
+    $scope.logo = config.LOGO;
     $scope.hasStarted = false;
   });
 
-  $scope.$on('commit', function(event) {
+  $scope.$on('commit', function(event, selection) {
+    console.log(event)
     $rootScope.activeView = "animation-wrapper";
     console.log("commiting");
     $(".element").typed({
-      strings: ["$ git commit -a -m 'new image'", "$ git push resin master"],
+      strings: ["$ git commit -a -m '" + config.HEADING.commitMsg + "'", "$ git push resin master"],
       typeSpeed: 25,
       callback: function() {
         setTimeout(function() {
           $('.animation h1').html('<span class="element"></span>');
-          $rootScope.$broadcast('start_build');
+          $rootScope.$broadcast('start_build', selection);
         }, 2000);
       },
     });
@@ -58,14 +59,11 @@ function animationCtrl($scope, $rootScope, failSafeService) {
   $scope.$on('start_countdown', function(event) {
     $rootScope.activeView = "animation-wrapper";
     $(".element").typed({
-      strings: ["YOU JUST UPDATED", 'A FLEET OF DEVICES', 'IN SEATTLE',
-        " <b class='noise'>NICE !!!</b>"
-      ],
+      strings:  config.HEADING.congrats,
       typeSpeed: 50,
 
       callback: function() {
         setTimeout(function() {
-          // $rootScope.$broadcast('start_tts');
           $('.animation h1').html('<span class="element"></span>');
           $rootScope.$broadcast('pre_start');
         }, 5000);
@@ -76,23 +74,17 @@ function animationCtrl($scope, $rootScope, failSafeService) {
 
 
 function terminalCtrl($scope, $rootScope, failSafeService) {
-  $scope.$on('start_build', function(event) {
+  $scope.$on('start_build', function(event, selection) {
 
     rows = parseInt(config.ROWS) || Math.ceil(h/24) //makes the term.js responsive-ish
-    cols = parseInt(config.COLS) || Math.ceil(w/2) //makes the term.js responsive-ish
+    cols = parseInt(config.COLS) || Math.ceil(w/0.5) //makes the term.js responsive-ish
 
     console.log(rows + " " + cols)
     $rootScope.activeView = "tty-wrapper";
     // run push script and pass path to simple-beast-demo
+    var script = __dirname + '/push.sh';
 
-    if (isWindows()) {
-      var cmd = __dirname + '/push.cmd'
-    } else {
-      var script = __dirname + '/push.sh'
-      var cmd = "bash"
-    }
-
-    var command = pty.spawn(cmd, [script],{
+    var command = pty.spawn("bash", [script, selection, config.HEADING.commitMsg], {
       name: 'xterm-color',
       cols: cols,
       rows: rows,
@@ -122,32 +114,38 @@ function selectorCtrl($scope, $rootScope, failSafeService) {
   $scope.$on('start_selector', function(event) {
     $rootScope.activeView = "selector-wrapper";
     $scope.images = []
-    if (config.SLAVES.length > 1) {
+    $scope.heading = config.HEADING.selection
+    if (!config.PICTURE_DEMO) {
       // check if we are one app or many
-      for (index in config.SLAVES) {
-          $scope.images.push(config.SLAVES[index].name)
+      for (index in config.APPS) {
+          $scope.images.push(config.APPS[index].name)
       }
     } else {
       // working with single image app
       $scope.images = config.IMAGES;
     }
+
     // declare image options it must have a corresponding raw file in the same dir;
-    $scope.select = function(image) {
-      $scope.selection = image;
+    $scope.select = function(target) {
+      $scope.selection = target;
     };
 
     $scope.changeRepo = function(){
-
-      fs.copy(__dirname + '/images/'+ $scope.selection + '.raw', '../simple-beast-fork/images/image.raw', function (err) {
-        if ($scope.selection == null) {
-          $scope.warning = "you first need to select an image"
-          return;
-        } else {
-          if (err) return console.error(err)
-          console.log("code change success!")
-          $rootScope.$broadcast('commit');
-        }
-      }) // copy image file
+      if (!config.PICTURE_DEMO) {
+        console.log($scope.selection)
+        $rootScope.$broadcast('commit', $scope.selection);
+      } else {
+        fs.copy(__dirname + '/images/'+ $scope.selection + '.raw', '../' + config.APPS[0].name + '/images/image.raw', function (err) {
+          if ($scope.selection == null) {
+            $scope.warning = "you first need to select an image"
+            return;
+          } else {
+            if (err) return console.error(err)
+            console.log("code change success!")
+            $rootScope.$broadcast('commit', config.APPS[0].name);
+          }
+        }) // copy image file
+      }
     }
   });
 }

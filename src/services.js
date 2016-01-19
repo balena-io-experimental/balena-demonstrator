@@ -14,12 +14,6 @@ resin.auth.login(credentials, function(error) {
   console.log("success authenticated with resin API")
 });
 
-// init pubnub
-var pubnub = PUBNUB({
-    subscribe_key: config.SUB,
-    publish_key: config.PUB
-});
-
 // polls resin app for all devices data
 app.factory('devicesService', function($timeout) {
 	var data = {};
@@ -42,16 +36,23 @@ app.factory('devicesService', function($timeout) {
 
 // Fail safe service to trigger events if needed
 app.service('failSafeService', function($rootScope) {
-	pubnub.subscribe({
-	    channel: 'events',
-	    message: function(m){
-	    	console.log(m)
-        // message must = eventname
-	    	$rootScope.$broadcast(m)
-	    },
-	    error: function (error) {
-	      // Handle error here
-	      console.log(JSON.stringify(error));
-	    }
-	 });
+  // SERVICE NO LONGER IN USE
+
+  // init pubnub
+  // var pubnub = PUBNUB({
+  //     subscribe_key: config.SUB,
+  //     publish_key: config.PUB
+  // });
+	// pubnub.subscribe({
+	//     channel: 'events',
+	//     message: function(m){
+	//     	console.log(m)
+  //       // message must = eventname
+	//     	$rootScope.$broadcast(m)
+	//     },
+	//     error: function (error) {
+	//       // Handle error here
+	//       console.log(JSON.stringify(error));
+	//     }
+	//  });
 });

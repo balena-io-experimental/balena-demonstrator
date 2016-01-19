@@ -7,7 +7,7 @@ var parentDir =__dirname;
 
 
 try {
-  fs.accessSync(parentDir + "/.." + "/" + config.SLAVES[0].name, fs.F_OK);
+  fs.accessSync(parentDir + "/.." + "/" + config.APPS[0].name, fs.F_OK);
   // check if slave repo exists
   console.log('slave-repo exists');
   startApp();
@@ -30,9 +30,9 @@ function startApp() {
 }
 
 function cloneSlave() {
-  console.log("clone " +  config.SLAVES)
-  for (index in config.SLAVES) {
-    child = exec("cd /" + parentDir + "/.. && git clone " + config.SLAVES[index].repo + " " + config.SLAVES[index].name + "&& cd " + config.SLAVES[index].name + " && git remote add resin " + config.REMOTE, function (error, stdout, stderr) {
+  console.log("clone " +  config.APPS)
+  for (index in config.APPS) {
+    child = exec("cd /" + parentDir + "/.. && git clone " + config.APPS[index].repo + " " + config.APPS[index].name + "&& cd " + config.APPS[index].name + " && git remote add resin " + config.REMOTE, function (error, stdout, stderr) {
       console.log(stdout);
       console.log(stderr);
       if (error !== null) {
