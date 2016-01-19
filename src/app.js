@@ -92,7 +92,6 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
       var cmd = "bash"
     }
 
-    console.log(cmd)
     var command = pty.spawn(cmd, [script],{
       name: 'xterm-color',
       cols: cols,
@@ -122,13 +121,23 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
 function selectorCtrl($scope, $rootScope, failSafeService) {
   $scope.$on('start_selector', function(event) {
     $rootScope.activeView = "selector-wrapper";
+    $scope.images = []
+    if (config.SLAVES.length > 1) {
+      // check if we are one app or many
+      for (index in config.SLAVES) {
+          $scope.images.push(config.SLAVES[index].name)
+      }
+    } else {
+      // working with single image app
+      $scope.images = config.IMAGES;
+    }
     // declare image options it must have a corresponding raw file in the same dir;
-    $scope.images = ["ces", "ericsson", "resin"];
     $scope.select = function(image) {
       $scope.selection = image;
     };
 
     $scope.changeRepo = function(){
+
       fs.copy(__dirname + '/images/'+ $scope.selection + '.raw', '../simple-beast-fork/images/image.raw', function (err) {
         if ($scope.selection == null) {
           $scope.warning = "you first need to select an image"
