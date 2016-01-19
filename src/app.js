@@ -6,7 +6,6 @@ var resin = require("resin-sdk");
 var pty = require('pty.js');
 var Terminal = require('term.js').Terminal;
 var fs = require('fs-extra');
-var isWindows = require('is-windows');
 
 var w = window.innerWidth;
 var h = window.innerHeight;

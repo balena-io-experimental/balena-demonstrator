@@ -39,6 +39,13 @@ Make sure you have these environment variables in a file named `env.json` in `/c
 }
 ```
 
+## To start
+```
+node start
+```
+
+Note: currently if you change the `REMOTE` after running `node start` you'll need to delete the  applications repositories rerun the start command. 
+
 ```
 **Windows users**
 git checkout no-tty
