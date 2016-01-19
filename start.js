@@ -1,21 +1,12 @@
 var config = require('./env.json');
 var fs = require('fs');
+var async = require("async");
 var exec = require('child_process').exec;
 var child;
 
 var parentDir =__dirname;
 
-
-try {
-  fs.accessSync(parentDir + "/.." + "/" + config.APPS[0].name, fs.F_OK);
-  // check if slave repo exists
-  console.log('slave-repo exists');
-  startApp();
-} catch (e) {
-  console.log('no slave-repo, cloning slave-repo');
-  cloneSlave();
-  startApp();
-}
+check()
 
 function startApp() {
   child = exec("npm start", function (error, stdout, stderr) {
@@ -29,15 +20,28 @@ function startApp() {
   });
 }
 
-function cloneSlave() {
-  console.log("clone " +  config.APPS)
-  for (index in config.APPS) {
-    child = exec("cd /" + parentDir + "/.. && git clone " + config.APPS[index].repo + " " + config.APPS[index].name + "&& cd " + config.APPS[index].name + " && git remote add resin " + config.REMOTE, function (error, stdout, stderr) {
-      console.log(stdout);
-      console.log(stderr);
-      if (error !== null) {
-        console.log('exec error: ' + error);
+function check() {
+  async.each(config.APPS,
+    // 2nd param is the function that each item is passed to
+    function(app, callback){
+      try {
+        fs.accessSync(parentDir + "/.." + "/" + app.name, fs.F_OK);
+        callback();
+      } catch (e) {
+        child = exec("cd /" + parentDir + "/.. && git clone " + app.repo + " " + app.name + "&& cd " + app.name + " && git remote add resin " + config.REMOTE, function (error, stdout, stderr) {
+          console.log(stdout);
+          console.log(stderr);
+          if (error !== null) {
+            console.log('exec error: ' + error);
+          }
+          callback();
+        });
       }
-    });
-  }
+    },
+    // 3rd param is the function to call when everything's done
+    function(err){
+      // All tasks are done now
+      startApp();
+    }
+  );
 }

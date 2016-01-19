@@ -26,6 +26,7 @@
     "electron-rebuild": "^1.0.2"
   },
   "dependencies": {
+    "async": "^1.5.2",
     "fs-extra": "^0.26.3",
     "pty.js": "^0.3.0",
     "resin-sdk": "*",
