@@ -76,7 +76,7 @@ function terminalCtrl($scope, $rootScope, failSafeService) {
   $scope.$on('start_build', function(event, selection) {
 
     rows = parseInt(config.ROWS) || Math.ceil(h/24) //makes the term.js responsive-ish
-    cols = parseInt(config.COLS) || Math.ceil(w/0.5) //makes the term.js responsive-ish
+    cols = parseInt(config.COLS) || Math.ceil(w) //makes the term.js responsive-ish
 
     console.log(rows + " " + cols)
     $rootScope.activeView = "tty-wrapper";
