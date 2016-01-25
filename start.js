@@ -7,7 +7,7 @@ var path = require('path');
 var child;
 
 var parentDir =__dirname;
-
+var remoteName = 'resin'
 
 var cloneOptions = {};
 cloneOptions.remoteCallbacks = {
@@ -30,16 +30,16 @@ function setUp() {
         console.log("cloning")
         Git.Clone(app.repo, path.join('apps', app.name), cloneOptions).then(function(repo) {
           // Work with the repository object here.
-          Git.Remote.setUrl(repo, 'resin', config.REMOTE);
+          Git.Remote.setUrl(repo, remoteName, config.REMOTE);
         }).catch(function(err) {
           console.log(err);
           Git.Repository.open(path.join('apps', app.name)).then(function(repo) {
             console.log(repo)
-            Git.Remote.lookup(repo, 'resin', callback).then(function(remote) {
+            Git.Remote.lookup(repo, remoteName, callback).then(function(remote) {
               if(remote) {
-                Git.Remote.setUrl(repo, 'resin', config.REMOTE);
+                Git.Remote.setUrl(repo, remoteName, config.REMOTE);
               } else {
-                Git.Remote.create(repo, 'resin', config.REMOTE);
+                Git.Remote.create(repo, remoteName, config.REMOTE);
               }
             });
           }).catch(function(err) {
