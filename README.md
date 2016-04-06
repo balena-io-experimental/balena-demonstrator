@@ -45,10 +45,20 @@ Make sure you have [FFmpeg](http://ffmpeg.org/download.html) installed and run t
 
 ```
 $ cd src/images
-$ ./png2fb.sh image-filename.png
+$ ./png2fb.sh new-image.png
 ```
 
 This will create a .raw image in the ``src/images`` folder.
+
+Append the new files to the ``IMAGES`` array in the env.json file:
+
+```
+  "IMAGES": [
+    "...",
+    "new-image"
+  ],
+  ...
+```
 
 Finally, commit and push your changes with:
 
