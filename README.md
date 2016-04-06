@@ -17,12 +17,12 @@ $ git config --global user.email johndoe@example.com
 #### repo set-up
 
 ```
-$ git clone https://github.com/resin-io-projects/resin-demo-app
-$ cd resin-demo-app
+$ git clone https://github.com/resin-io-projects/resin-demonstrator
+$ cd resin-demonstrator
 $ npm install
 ```
 
-Make sure you have these environment variables in a file named `env.json` in `/resin-demo-app`
+Make sure you have these environment variables in a file named `env.json` in `/resin-demonstrator`
 ```
 {
   "REMOTE": "resin app endpoint",
