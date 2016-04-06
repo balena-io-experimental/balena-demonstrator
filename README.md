@@ -17,14 +17,12 @@ $ git config --global user.email johndoe@example.com
 #### repo set-up
 
 ```
-git clone https://github.com/craig-mulligan/ces-demo && cd ces-demo
+$ git clone https://github.com/resin-io-projects/resin-demo-app
+$ cd resin-demo-app
+$ npm install
 ```
 
-```
-npm install
-```
-
-Make sure you have these environment variables in a file named `env.json` in `/ces-demo`
+Make sure you have these environment variables in a file named `env.json` in `/resin-demo-app`
 ```
 {
   "REMOTE": "resin app endpoint",
@@ -37,6 +35,26 @@ Make sure you have these environment variables in a file named `env.json` in `/c
   "IMAGES": "array of images (must have png and raw file in /images folder)",
   "HEADING": For configuring certain strings in the app
 }
+```
+
+## Adding images
+
+Add new images to ``src/images`` folder. They must be in .png format, with dimensions (WxH) 300x400.
+
+Make sure you have [FFmpeg](http://ffmpeg.org/download.html) installed and run the following:
+
+```
+$ cd src/images
+$ ./png2fb.sh image-filename.png
+```
+
+This will create a .raw image in the ``src/images`` folder.
+
+Finally, commit and push your changes with:
+
+```
+$ git commit -am 'Added new images'
+$ git push origin master
 ```
 
 ## To start
